@@ -15,7 +15,8 @@ class AuthService implements AuthRepository {
           email: email, password: password);
       return res.user;
     } on FirebaseAuthException catch (e) {
-      throw e;
+      log('$e');
+      rethrow;
     } catch (e) {
       throw Exception('Ошибка при регистрации. Попробуйте еще раз.');
     }
@@ -29,7 +30,8 @@ class AuthService implements AuthRepository {
           email: email, password: password);
       return res.user;
     } on FirebaseAuthException catch (e) {
-      throw e;
+      log('$e');
+      rethrow;
     } catch (e) {
       throw Exception('Ошибка при авторизации. Попробуйте еще раз.');
     }

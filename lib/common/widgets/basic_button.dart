@@ -14,7 +14,11 @@ class BasicButton extends StatelessWidget {
       height: 56,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: const Color.fromARGB(255, 252, 241, 238),
+          foregroundColor: Colors.black,
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
         ),
         onPressed: onTap,
         child: Text(

@@ -71,7 +71,12 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sign In"),
+        title: const Text(
+          "Sign In",
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
       ),
@@ -132,7 +137,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     await _authService.signInWithGoogle();
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: const Color.fromARGB(255, 252, 241, 238),
                       foregroundColor: Colors.black),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

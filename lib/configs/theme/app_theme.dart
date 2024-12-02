@@ -7,7 +7,7 @@ class AppTheme {
     fontFamily: 'Ubuntu Condensed',
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: const Color.fromARGB(255, 252, 241, 238),
+      fillColor: Colors.white,
       contentPadding: const EdgeInsets.all(20),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
