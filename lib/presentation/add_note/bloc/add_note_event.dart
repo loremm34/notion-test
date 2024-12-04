@@ -8,3 +8,5 @@ class AddNote extends AddNoteEvent {
 
   AddNote({required this.note});
 }
+
+class LoadNotes extends AddNoteEvent {}

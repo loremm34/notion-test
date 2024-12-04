@@ -11,6 +11,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<AddNoteBloc>().add(LoadNotes());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notion'),
