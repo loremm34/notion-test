@@ -34,6 +34,7 @@ class NoteModel {
 
   Map<String, dynamic> toDocument() {
     return {
+      'id': id,
       'title': title,
       'description': description,
       'date': date.toIso8601String(),
@@ -43,7 +44,7 @@ class NoteModel {
   factory NoteModel.fromDocument(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return NoteModel(
-      id: doc.id,
+      id: doc['id'],
       title: data['title'] ?? '',
       description: data['description'] ?? '',
       date: DateTime.parse(data['date']),
