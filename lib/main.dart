@@ -6,6 +6,7 @@ import 'package:notion_test/common/helpers/wrapper.dart';
 import 'package:notion_test/configs/theme/app_theme.dart';
 import 'package:notion_test/firebase_options.dart';
 import 'package:notion_test/presentation/add_note/bloc/add_note_bloc.dart';
+import 'package:notion_test/presentation/home/bloc/filter_sort_bloc.dart';
 import 'package:notion_test/simple_bloc_observer.dart';
 
 void main() async {
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => AddNoteBloc(),
+        ),
+        BlocProvider(
+          create: (context) => FilterSortBloc(),
         ),
       ],
       child: MaterialApp(
