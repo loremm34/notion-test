@@ -16,6 +16,8 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
     on<AddNote>(_onAddNote);
     on<LoadNotes>(_onLoadNotes);
     on<ToggleNote>(_onToggleNote);
+    on<DeleteNote>(_onDeleteNote);
+    on<UpdateNote>(_onUpdateNote);
   }
 
   Future<void> _onAddNote(
@@ -49,19 +51,56 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
     }
   }
 
+  Future<void> _onUpdateNote(
+    UpdateNote event,
+    Emitter<AddNoteState> emit,
+  ) async {
+    try {
+      emit(AddNoteLoading());
+
+      await _firestoreService.updateNote(event.note);
+
+      final index = _notes.indexWhere((note) => note.id == event.note.id);
+      if (index != -1) {
+        _notes[index] = event.note;
+      }
+
+      emit(AddNoteSuccess(notes: List.from(_notes)));
+      emit(AddNoteSuccess(notes: List.from(_notes)));
+    } catch (e) {
+      emit(AddNoteFailure('Failed while fetching notes'));
+      log('$e');
+    }
+  }
+
   Future<void> _onToggleNote(
     ToggleNote event,
     Emitter<AddNoteState> emit,
   ) async {
     try {
-      final note = _notes.firstWhere((note) => note.id == event.notId);
+      final note = _notes.firstWhere((note) => note.id == event.noteId);
       note.isCompleted = !note.isCompleted;
 
       await _firestoreService.updateNote(note);
       emit(AddNoteSuccess(notes: List.from(_notes)));
     } catch (e) {
       log('$e');
-      emit(AddNoteFailure('Failed while toggle notes'));
+      emit(AddNoteFailure('Failed while toggle note'));
+    }
+  }
+
+  Future<void> _onDeleteNote(
+    DeleteNote event,
+    Emitter<AddNoteState> emit,
+  ) async {
+    try {
+      await _firestoreService.deleteNote(event.noteId);
+
+      _notes.removeWhere((note) => note.id == event.noteId);
+      emit(AddNoteSuccess(notes: List.from(_notes)));
+    } catch (e) {
+      log('$e');
+      emit(AddNoteFailure('Failed while deleting note'));
     }
   }
 }

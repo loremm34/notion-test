@@ -12,7 +12,19 @@ class AddNote extends AddNoteEvent {
 class LoadNotes extends AddNoteEvent {}
 
 class ToggleNote extends AddNoteEvent {
-  final String notId;
+  final String noteId;
 
-  ToggleNote({required this.notId});
+  ToggleNote({required this.noteId});
+}
+
+class DeleteNote extends AddNoteEvent {
+  final String noteId;
+
+  DeleteNote({required this.noteId});
+}
+
+class UpdateNote extends AddNoteEvent {
+  final NoteModel note;
+
+  UpdateNote({required this.note});
 }

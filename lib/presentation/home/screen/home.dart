@@ -12,7 +12,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Загрузка всех заметок при инициализации экрана
     context.read<AddNoteBloc>().add(LoadNotes());
 
     return Scaffold(
@@ -35,7 +34,6 @@ class HomeScreen extends StatelessWidget {
               } else if (value == 'descending') {
                 filterSortBloc.add(SortNotesEvent(isAscending: false));
               }
-
               context.read<FilterSortBloc>().add(
                     UpdateNotesEvent(
                       notes: context.read<AddNoteBloc>().state is AddNoteSuccess
@@ -120,8 +118,20 @@ class HomeScreen extends StatelessWidget {
                       isCompleted: note.isCompleted,
                       onToggleNote: () {
                         context.read<AddNoteBloc>().add(
-                              ToggleNote(notId: note.id),
+                              ToggleNote(noteId: note.id),
                             );
+                      },
+                      enterNote: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return AddNoteScreen(
+                                note: note,
+                              );
+                            },
+                          ),
+                        );
                       },
                     );
                   },

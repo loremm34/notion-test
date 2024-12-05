@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:notion_test/common/widgets/basic_button.dart';
 import 'package:notion_test/data/models/note_model.dart';
 import 'package:notion_test/presentation/add_note/bloc/add_note_bloc.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddNoteScreen extends StatefulWidget {
-  const AddNoteScreen({super.key});
+  const AddNoteScreen({super.key, this.note});
+
+  final NoteModel? note;
 
   @override
   State<AddNoteScreen> createState() => _AddNoteScreenState();
@@ -15,14 +16,19 @@ class AddNoteScreen extends StatefulWidget {
 
 class _AddNoteScreenState extends State<AddNoteScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  String _selectedDateTime = '';
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
+  late String _selectedDateTime;
 
   @override
   void initState() {
     super.initState();
-    _selectedDateTime = _formatDateTime(DateTime.now());
+    _titleController = TextEditingController(text: widget.note?.title ?? '');
+    _descriptionController =
+        TextEditingController(text: widget.note?.description ?? '');
+    _selectedDateTime = widget.note != null
+        ? _formatDateTime(widget.note!.date)
+        : _formatDateTime(DateTime.now());
   }
 
   @override
@@ -69,12 +75,29 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     }
   }
 
-  void _showSnackBar(String text) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(text),
-      ),
-    );
+  void _saveNote() {
+    if (_formKey.currentState?.validate() ?? false) {
+      final dateTime = DateFormat('MM dd yyyy HH:mm').parse(_selectedDateTime);
+      final note = NoteModel(
+        id: widget.note?.id ?? const Uuid().v4(),
+        title: _titleController.text,
+        description: _descriptionController.text,
+        date: dateTime,
+      );
+
+      context.read<AddNoteBloc>().add(
+            widget.note == null ? AddNote(note: note) : UpdateNote(note: note),
+          );
+
+      Navigator.pop(context);
+    }
+  }
+
+  void _deleteNote() {
+    if (widget.note != null) {
+      context.read<AddNoteBloc>().add(DeleteNote(noteId: widget.note!.id));
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -82,8 +105,16 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text('Add note'),
+        title: Text(widget.note == null ? 'Add New Note' : 'Edit Note'),
         centerTitle: true,
+        actions: widget.note != null
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: _deleteNote,
+                ),
+              ]
+            : null,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -92,60 +123,46 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: TextButton(
-                  onPressed: () => _selectDate(context),
-                  child: Text(
-                    'Pick Date and Time: $_selectedDateTime',
-                    style: const TextStyle(fontSize: 16),
-                  ),
+              TextButton(
+                onPressed: () => _selectDate(context),
+                child: Text(
+                  'Pick Date and Time: $_selectedDateTime',
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
               TextFormField(
                 controller: _titleController,
                 decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                  filled: false,
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  hintText: 'Books to read in 2023 📚',
-                  hintStyle: TextStyle(fontSize: 25),
+                  hintText: 'Enter note title',
+                  hintStyle: TextStyle(fontSize: 18),
                 ),
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Title is required' : null,
               ),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: _descriptionController,
-                maxLines: 2,
-                maxLength: 80,
+                maxLines: 5,
                 decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                  filled: false,
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  hintText:
-                      'I have a new year resolution to read one book in a month,',
+                  hintText: 'Enter note description',
                   hintStyle: TextStyle(fontSize: 15),
                 ),
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Description is required'
+                    : null,
               ),
               const Spacer(),
-              BasicButton(
-                buttonText: 'Add Note',
-                onTap: () {
-                  final dateTime =
-                      DateFormat('MM dd yyyy HH:mm').parse(_selectedDateTime);
-                  final note = NoteModel(
-                    id: const Uuid().v4(),
-                    title: _titleController.text,
-                    description: _descriptionController.text,
-                    date: dateTime,
-                  );
-                  context.read<AddNoteBloc>().add(AddNote(note: note));
-
-                  Navigator.pop(context);
-                },
-              )
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: _saveNote,
+                      child:
+                          Text(widget.note == null ? 'Add Note' : 'Save Note'),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
