@@ -6,12 +6,14 @@ class NoteModel {
   final String title;
   final String description;
   final DateTime date;
+  bool isCompleted;
 
   NoteModel({
     required this.id,
     required this.title,
     required this.description,
     required this.date,
+    this.isCompleted = false,
   });
 
   NoteEntity toEntity() {
@@ -20,16 +22,17 @@ class NoteModel {
       title: title,
       description: description,
       date: date,
+      isCompleted: isCompleted,
     );
   }
 
   factory NoteModel.fromEntity(NoteEntity entity) {
     return NoteModel(
-      id: entity.id,
-      title: entity.title,
-      description: entity.description,
-      date: entity.date,
-    );
+        id: entity.id,
+        title: entity.title,
+        description: entity.description,
+        date: entity.date,
+        isCompleted: entity.isCompleted);
   }
 
   Map<String, dynamic> toDocument() {
@@ -38,6 +41,7 @@ class NoteModel {
       'title': title,
       'description': description,
       'date': date.toIso8601String(),
+      'isCompleted': isCompleted
     };
   }
 
@@ -48,6 +52,7 @@ class NoteModel {
       title: data['title'] ?? '',
       description: data['description'] ?? '',
       date: DateTime.parse(data['date']),
+      isCompleted: data['isCompleted'] ?? false,
     );
   }
 }

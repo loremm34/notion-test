@@ -54,6 +54,12 @@ class HomeScreen extends StatelessWidget {
                   title: notes.title,
                   description: notes.description,
                   dateTime: notes.date.toString(),
+                  isCompleted: notes.isCompleted,
+                  onToggleNote: () {
+                    context.read<AddNoteBloc>().add(
+                          ToggleNote(notId: notes.id),
+                        );
+                  },
                 );
               },
             );

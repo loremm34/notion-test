@@ -6,11 +6,15 @@ class NoteItem extends StatelessWidget {
     required this.title,
     required this.description,
     required this.dateTime,
+    required this.isCompleted,
+    required this.onToggleNote,
   });
 
   final String title;
   final String description;
   final String dateTime;
+  final bool isCompleted;
+  final VoidCallback onToggleNote;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +27,59 @@ class NoteItem extends StatelessWidget {
         child: SizedBox(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(title),
-                Text(description),
-                Row(
-                  children: [
-                    const Spacer(),
-                    Text(dateTime),
-                  ],
-                )
+                IconButton(
+                  icon: Icon(
+                    isCompleted
+                        ? Icons.check_box
+                        : Icons.check_box_outline_blank,
+                    color: isCompleted ? Colors.green : Colors.grey,
+                  ),
+                  onPressed: onToggleNote,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 8),
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          decoration: isCompleted
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        description,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                          decoration: isCompleted
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            dateTime,
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

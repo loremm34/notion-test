@@ -34,6 +34,7 @@ class FirestoreService implements FirestoreRepository {
           .update(note.toDocument());
     } catch (e) {
       log('$e');
+      throw Exception('Error updating notes');
     }
   }
 
@@ -48,6 +49,7 @@ class FirestoreService implements FirestoreRepository {
           .delete();
     } catch (e) {
       log('$e');
+      throw Exception('Error deleting notes');
     }
   }
 
@@ -63,7 +65,7 @@ class FirestoreService implements FirestoreRepository {
       return snapshot.docs.map((doc) => NoteModel.fromDocument(doc)).toList();
     } catch (e) {
       log('$e');
-      rethrow;
+      throw Exception('Error fetching notes');
     }
   }
 }

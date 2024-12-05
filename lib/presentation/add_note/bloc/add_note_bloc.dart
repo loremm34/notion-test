@@ -15,6 +15,7 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
   AddNoteBloc() : super(AddNoteInitial()) {
     on<AddNote>(_onAddNote);
     on<LoadNotes>(_onLoadNotes);
+    on<ToggleNote>(_onToggleNote);
   }
 
   Future<void> _onAddNote(
@@ -45,6 +46,22 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
     } catch (e) {
       emit(AddNoteFailure('Failed while fetching notes'));
       log('$e');
+    }
+  }
+
+  Future<void> _onToggleNote(
+    ToggleNote event,
+    Emitter<AddNoteState> emit,
+  ) async {
+    try {
+      final note = _notes.firstWhere((note) => note.id == event.notId);
+      note.isCompleted = !note.isCompleted;
+
+      await _firestoreService.updateNote(note);
+      emit(AddNoteSuccess(notes: List.from(_notes)));
+    } catch (e) {
+      log('$e');
+      emit(AddNoteFailure('Failed while toggle notes'));
     }
   }
 }

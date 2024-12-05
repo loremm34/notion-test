@@ -10,3 +10,9 @@ class AddNote extends AddNoteEvent {
 }
 
 class LoadNotes extends AddNoteEvent {}
+
+class ToggleNote extends AddNoteEvent {
+  final String notId;
+
+  ToggleNote({required this.notId});
+}
