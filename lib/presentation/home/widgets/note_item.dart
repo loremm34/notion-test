@@ -20,6 +20,8 @@ class NoteItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: DecoratedBox(
@@ -30,7 +32,9 @@ class NoteItem extends StatelessWidget {
           onTap: enterNote,
           child: SizedBox(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: width > 600
+                  ? const EdgeInsets.all(2.0)
+                  : const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -44,13 +48,15 @@ class NoteItem extends StatelessWidget {
                     onPressed: onToggleNote,
                   ),
                   const SizedBox(width: 8),
-                  Expanded(
+                  Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 8),
                         Text(
                           title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -62,6 +68,8 @@ class NoteItem extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           description,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],

@@ -107,33 +107,70 @@ class HomeScreen extends StatelessWidget {
                   return const Center(child: Text('Zero notes yet'));
                 }
 
-                return ListView.builder(
-                  itemCount: notes.length,
-                  itemBuilder: (context, index) {
-                    final note = notes[index];
-                    return NoteItem(
-                      title: note.title,
-                      description: note.description,
-                      dateTime: note.date.toString(),
-                      isCompleted: note.isCompleted,
-                      onToggleNote: () {
-                        context.read<AddNoteBloc>().add(
-                              ToggleNote(noteId: note.id),
-                            );
-                      },
-                      enterNote: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return AddNoteScreen(
-                                note: note,
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    if (constraints.maxWidth > 900) {
+                      return GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16.0,
+                          mainAxisSpacing: 16.0,
+                          childAspectRatio: 6.5,
+                        ),
+                        itemCount: notes.length,
+                        itemBuilder: (context, index) {
+                          final note = notes[index];
+                          return NoteItem(
+                            title: note.title,
+                            description: note.description,
+                            dateTime: note.date.toString(),
+                            isCompleted: note.isCompleted,
+                            onToggleNote: () {
+                              context
+                                  .read<AddNoteBloc>()
+                                  .add(ToggleNote(noteId: note.id));
+                            },
+                            enterNote: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AddNoteScreen(note: note),
+                                ),
                               );
                             },
-                          ),
-                        );
-                      },
-                    );
+                          );
+                        },
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: notes.length,
+                        itemBuilder: (context, index) {
+                          final note = notes[index];
+                          return NoteItem(
+                            title: note.title,
+                            description: note.description,
+                            dateTime: note.date.toString(),
+                            isCompleted: note.isCompleted,
+                            onToggleNote: () {
+                              context
+                                  .read<AddNoteBloc>()
+                                  .add(ToggleNote(noteId: note.id));
+                            },
+                            enterNote: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AddNoteScreen(note: note),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    }
                   },
                 );
               },
