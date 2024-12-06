@@ -1,3 +1,4 @@
+// entity задачи
 class NoteEntity {
   final String id;
   final String title;

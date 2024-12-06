@@ -4,9 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:notion_test/data/repository/auth_repository.dart';
 
+// сервис интеграции с firebase для аутентификации
 class AuthService implements AuthRepository {
   final _auth = FirebaseAuth.instance;
-
+  // создание юзера через пароль и
   @override
   Future<User?> createUserWithEmailAndPassword(
       String email, String password) async {
@@ -22,6 +23,7 @@ class AuthService implements AuthRepository {
     }
   }
 
+  // логин по паролю и пользователю
   @override
   Future<User?> loginUserWithEmailAndPassword(
       String email, String password) async {
@@ -37,6 +39,7 @@ class AuthService implements AuthRepository {
     }
   }
 
+  // логин через гугл
   @override
   Future<UserCredential?> signInWithGoogle() async {
     try {
@@ -53,6 +56,7 @@ class AuthService implements AuthRepository {
     return null;
   }
 
+  // выход с аккаунта
   @override
   Future<void> signOut() async {
     try {

@@ -1,5 +1,6 @@
 part of 'filter_sort_bloc.dart';
 
+// состояние списка задач
 class FilterSortState {
   final List<NoteModel> notes;
   final bool? isFiltered;

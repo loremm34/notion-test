@@ -5,13 +5,14 @@ import 'package:notion_test/data/models/note_model.dart';
 part 'filter_sort_event.dart';
 part 'filter_sort_state.dart';
 
+// bloc сортировки и фильтрации
 class FilterSortBloc extends Bloc<FilterSortEvent, FilterSortState> {
   FilterSortBloc() : super(FilterSortInitial()) {
     on<SortNotesEvent>(_onSortNotes);
     on<FilterNotesEvent>(_onFilterNotes);
     on<UpdateNotesEvent>(_onUpdateNotes);
   }
-
+  // сортировка задач
   void _onSortNotes(SortNotesEvent event, Emitter<FilterSortState> emit) {
     final sortedNotes = _applySort(state.notes, isAscending: event.isAscending);
     emit(
@@ -23,6 +24,7 @@ class FilterSortBloc extends Bloc<FilterSortEvent, FilterSortState> {
     );
   }
 
+  // фильтрация задач
   void _onFilterNotes(FilterNotesEvent event, Emitter<FilterSortState> emit) {
     final filteredNotes = _applyFilter(
       state.notes,
@@ -37,6 +39,7 @@ class FilterSortBloc extends Bloc<FilterSortEvent, FilterSortState> {
     );
   }
 
+  // обновление задач после фильтрации
   void _onUpdateNotes(UpdateNotesEvent event, Emitter<FilterSortState> emit) {
     final filteredNotes = _applyFilter(
       event.notes,
@@ -51,6 +54,7 @@ class FilterSortBloc extends Bloc<FilterSortEvent, FilterSortState> {
     );
   }
 
+  // применение сортировки
   List<NoteModel> _applySort(List<NoteModel> notes,
       {required bool? isAscending}) {
     if (isAscending == null) return notes;
@@ -61,6 +65,7 @@ class FilterSortBloc extends Bloc<FilterSortEvent, FilterSortState> {
       );
   }
 
+  // применение фильрова
   List<NoteModel> _applyFilter(List<NoteModel> notes,
       {required bool? isFiltered}) {
     if (isFiltered == null) return notes;

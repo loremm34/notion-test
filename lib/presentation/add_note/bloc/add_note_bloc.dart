@@ -21,7 +21,7 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
     on<DeleteNote>(_onDeleteNote);
     on<UpdateNote>(_onUpdateNote);
   }
-
+// добавление задачи и установление уведомления
   Future<void> _onAddNote(
     AddNote event,
     Emitter<AddNoteState> emit,
@@ -39,6 +39,7 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
     }
   }
 
+  // загрузка задач
   Future<void> _onLoadNotes(
     LoadNotes event,
     Emitter<AddNoteState> emit,
@@ -55,6 +56,7 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
     }
   }
 
+  // обновление задач
   Future<void> _onUpdateNote(
     UpdateNote event,
     Emitter<AddNoteState> emit,
@@ -80,6 +82,7 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
     }
   }
 
+  // смена состояния задачи
   Future<void> _onToggleNote(
     ToggleNote event,
     Emitter<AddNoteState> emit,
@@ -96,6 +99,7 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
     }
   }
 
+  // удаление задачи
   Future<void> _onDeleteNote(
     DeleteNote event,
     Emitter<AddNoteState> emit,

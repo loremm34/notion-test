@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:notion_test/data/entities/note_entity.dart';
 
+// модель задачи
 class NoteModel {
   final String id;
   final String title;

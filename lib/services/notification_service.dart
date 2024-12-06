@@ -5,11 +5,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notion_test/data/repository/notification_repository.dart';
 import 'package:timezone/timezone.dart' as tz;
 
+// севрис интеграции уведомлений
 class NotificationService implements NotificationRepository {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-
+  // запрос разрешения на отправку уведомлений
   @override
   Future<void> requestPermissions() async {
     NotificationSettings settings = await _firebaseMessaging.requestPermission(
@@ -32,6 +33,7 @@ class NotificationService implements NotificationRepository {
     }
   }
 
+  // создание запланированного уведомления
   @override
   Future<void> scheduleNotification(
       DateTime targetDateTime, String noteTitle) async {
@@ -65,6 +67,7 @@ class NotificationService implements NotificationRepository {
     );
   }
 
+  // инициализация уведомлений
   @override
   Future<void> initNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =

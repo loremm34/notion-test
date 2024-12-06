@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notion_test/presentation/auth/screen/sign_in.dart';
 import 'package:notion_test/presentation/home/screen/home.dart';
 
+// Класс для отслеживания залогинен ли пользователь или нет
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});
   @override

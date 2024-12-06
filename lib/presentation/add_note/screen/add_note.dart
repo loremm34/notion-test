@@ -5,6 +5,7 @@ import 'package:notion_test/presentation/add_note/bloc/add_note_bloc.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// экран добавления задачи
 class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({super.key, this.note});
 
@@ -28,7 +29,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         TextEditingController(text: widget.note?.description ?? '');
     _selectedDateTime = widget.note != null
         ? _formatDateTime(widget.note!.date)
-        : _formatDateTime(DateTime.now());
+        : _formatDateTime(
+            DateTime.now(),
+          );
   }
 
   @override
@@ -38,10 +41,12 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     super.dispose();
   }
 
+  // форматирование даты
   String _formatDateTime(DateTime dateTime) {
     return DateFormat('MM dd yyyy HH:mm').format(dateTime);
   }
 
+  // выбор даты
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -55,6 +60,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     }
   }
 
+  // выбор времени
   Future<void> _selectTime(BuildContext context, DateTime pickedDate) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
@@ -75,6 +81,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     }
   }
 
+  // добавлениие задачи в список
   void _saveNote() {
     if (_formKey.currentState?.validate() ?? false) {
       final dateTime = DateFormat('MM dd yyyy HH:mm').parse(_selectedDateTime);
@@ -93,6 +100,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     }
   }
 
+  // удаление задачи
   void _deleteNote() {
     if (widget.note != null) {
       context.read<AddNoteBloc>().add(DeleteNote(noteId: widget.note!.id));

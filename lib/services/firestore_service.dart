@@ -5,10 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notion_test/data/models/note_model.dart';
 import 'package:notion_test/data/repository/firestore_repository.dart';
 
+// сервис для работы с firestore
 class FirestoreService implements FirestoreRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String userId = FirebaseAuth.instance.currentUser!.uid;
-
+  // добавить задачу
   @override
   Future<void> addNote(NoteModel note) async {
     try {
@@ -23,6 +24,7 @@ class FirestoreService implements FirestoreRepository {
     }
   }
 
+  // обновить задачу
   @override
   Future<void> updateNote(NoteModel note) async {
     try {
@@ -38,6 +40,7 @@ class FirestoreService implements FirestoreRepository {
     }
   }
 
+  // удалить задачу
   @override
   Future<void> deleteNote(String noteId) async {
     try {
@@ -53,6 +56,7 @@ class FirestoreService implements FirestoreRepository {
     }
   }
 
+  // Получение всех задач по аккаунту
   @override
   Future<List<NoteModel>> fetchNotes() async {
     try {

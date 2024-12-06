@@ -10,6 +10,7 @@ import 'package:notion_test/presentation/auth/screen/sign_up.dart';
 import 'package:notion_test/presentation/home/screen/home.dart';
 import 'package:notion_test/services/auth_service.dart';
 
+// экран захода в аккаунт
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -23,7 +24,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _authService = AuthService();
-
+  // функция входа в аккаунт
   void _signIn() async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -55,6 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
+  // обработка ошибок
   String _handleAuthError(FirebaseAuthException e) {
     switch (e.code) {
       case 'user-not-found':

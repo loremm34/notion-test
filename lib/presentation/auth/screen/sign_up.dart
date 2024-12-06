@@ -10,6 +10,7 @@ import 'package:notion_test/presentation/auth/screen/sign_in.dart';
 import 'package:notion_test/presentation/home/screen/home.dart';
 import 'package:notion_test/services/auth_service.dart';
 
+// экран регистрации
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -23,8 +24,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _authService = AuthService();
-
-  void _signIn() async {
+  // функция создания аккаунта
+  void _signUp() async {
     if (_formKey.currentState!.validate()) {
       try {
         final user = await _authService.createUserWithEmailAndPassword(
@@ -55,6 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+  // обработка ошибок
   String _handleAuthError(FirebaseAuthException e) {
     switch (e.code) {
       case 'email-already-in-use':
@@ -123,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(height: 20),
                         BasicButton(
                           buttonText: 'Sign Up',
-                          onTap: _signIn,
+                          onTap: _signUp,
                         ),
                         const SizedBox(height: 20),
                         const Text(

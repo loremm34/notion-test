@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Реюз кнопки
 class BasicButton extends StatelessWidget {
   const BasicButton({super.key, required this.buttonText, required this.onTap});
 

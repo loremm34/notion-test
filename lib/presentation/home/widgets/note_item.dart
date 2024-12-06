@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// класс отображения задачи
 class NoteItem extends StatelessWidget {
   const NoteItem({
     super.key,

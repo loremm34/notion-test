@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// основная тема приложения
 class AppTheme {
   static final lightTheme = ThemeData(
     brightness: Brightness.light,

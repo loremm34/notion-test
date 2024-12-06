@@ -7,6 +7,7 @@ import 'package:notion_test/presentation/add_note/screen/add_note.dart';
 import 'package:notion_test/presentation/home/bloc/filter_sort_bloc.dart';
 import 'package:notion_test/presentation/home/widgets/note_item.dart';
 
+// главный экран
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
