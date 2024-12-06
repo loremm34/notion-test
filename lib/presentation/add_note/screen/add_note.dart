@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:notion_test/data/models/note_model.dart';
 import 'package:notion_test/presentation/add_note/bloc/add_note_bloc.dart';
+import 'package:notion_test/services/notification_service.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +22,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   late String _selectedDateTime;
+  final _notificationService = NotificationService();
 
   @override
   void initState() {

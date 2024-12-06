@@ -4,12 +4,14 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:notion_test/data/models/note_model.dart';
 import 'package:notion_test/services/firestore_service.dart';
+import 'package:notion_test/services/notification_service.dart';
 
 part 'add_note_event.dart';
 part 'add_note_state.dart';
 
 class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
   final _firestoreService = FirestoreService();
+  final _notificationService = NotificationService();
   final List<NoteModel> _notes = [];
 
   AddNoteBloc() : super(AddNoteInitial()) {
@@ -28,6 +30,8 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
     try {
       await _firestoreService.addNote(event.note);
       _notes.add(event.note);
+      _notificationService.scheduleNotification(
+          event.note.date, event.note.title);
       emit(AddNoteSuccess(notes: List.from(_notes)));
     } catch (e) {
       emit(AddNoteFailure('Error while adding a note'));
@@ -64,6 +68,9 @@ class AddNoteBloc extends Bloc<AddNoteEvent, AddNoteState> {
       if (index != -1) {
         _notes[index] = event.note;
       }
+
+      _notificationService.scheduleNotification(
+          event.note.date, event.note.title);
 
       emit(AddNoteSuccess(notes: List.from(_notes)));
       emit(AddNoteSuccess(notes: List.from(_notes)));
