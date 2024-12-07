@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "908800742441",
+    "project_id": "notion-test-eb99f",
+    "storage_bucket": "notion-test-eb99f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908800742441:android:359596cae6e073b7667838",
+        "android_client_info": {
+          "package_name": "com.notion.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908800742441-cj5gfcnui96rot3qpu111idhjqgj53ks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf2dnzTTZ4YAY2-v3Y52a-uDhAHr4Bq6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908800742441-3f1nrotip2m8j3vt4c17e2p9o6vonehv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "908800742441-nii6ml8ifmr0pi4vafgrk1sfrajmk35s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.notionTest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
